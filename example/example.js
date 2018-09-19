@@ -21,7 +21,6 @@ function validateXml(xml, key)
   sig.keyInfoProvider = new FileKeyInfo(key)
   sig.loadSignature(signature.toString())
   var res = sig.checkSignature(xml)
-  if (!res) console.log(sig.validationErrors)
   return res;
 }
 

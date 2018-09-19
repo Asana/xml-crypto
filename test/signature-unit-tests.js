@@ -589,8 +589,12 @@ function passLoadSignature(test, file, toString) {
 
 function failInvalidSignature(test, file, mode) {
   var xml = fs.readFileSync(file).toString()
-  var res = verifySignature(xml, mode)
-  test.equal(false, res, "expected signature to be invalid, but it was reported valid")
+  test.throws(function() {
+      verifySignature(xml, mode)
+  },
+      Error,
+      'invalid signature: the signature value PI2xGt3XrVcxYZ34Kw7nFdq75c7Mmo7J0q7yeDhBprHuJal/KV9KyKG+Zy3bmQIxNwkPh0KMP5r1YMTKlyifwbWK0JitRCSa0Fa6z6+TgJi193yiR5S1MQ+esoQT0RzyIOBl9/GuJmXx/1rXnqrTxmL7UxtqKuM29/eHwF0Q1UI= is incorrect'
+  );
 }
 
 function verifySignature(xml, mode) {
@@ -602,7 +606,6 @@ function verifySignature(xml, mode) {
   sig.keyInfoProvider = new FileKeyInfo("./test/static/client_public.pem")
   sig.loadSignature(node)
   var res = sig.checkSignature(xml)
-  console.log(sig.validationErrors)
   return res;
 }
 

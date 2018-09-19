@@ -132,10 +132,7 @@ Example:
 	sig.keyInfoProvider = new FileKeyInfo("client_public.pem")
 	sig.loadSignature(signature)
 	var res = sig.checkSignature(xml)
-	if (!res) console.log(sig.validationErrors)	
 `````
-
-if the verification process fails `sig.validationErrors` will have the errors.
 
 In order to protect from some attacks we must check the content we want to use is the one that has been signed:
 `````javascript
@@ -211,7 +208,7 @@ To verify xml documents:
 
 - `loadSignature(signatureXml)` - loads the signature where:
     - `signatureXml` - a string or node object (like an [xml-dom](https://github.com/jindw/xmldom) node) containing the xml representation of the signature
-- `checkSignature(xml)` - validates the given xml document and returns true if the validation was successful, `sig.validationErrors` will have the validation errors if any, where:
+- `checkSignature(xml)` - validates the given xml document and returns true if the validation was successful:
     - `xml` - a string containing a xml document
 
 

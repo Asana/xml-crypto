@@ -71,8 +71,12 @@ exports['test validating SAML response WithComments'] = function (test) {
   var sig = new crypto.SignedXml();
   sig.keyInfoProvider = new crypto.FileKeyInfo("./test/static/feide_public.pem");
   sig.loadSignature(signature);
-  var result = sig.checkSignature(xml);
-  // This doesn't matter, just want to make sure that we don't fail due to unknown algorithm
-  test.equal(result, false);
+  test.throws(
+      function() {
+        sig.checkSignature(xml)
+      },
+      Error,
+      'invalid signature: the signature value dkONrkxW+LSuDvnNMG/mWYFa47d2WGyapLhXSTYqrlT9Td+tT7ciojNJ55WTaPaCMt7IrGtIxxskPAZIjdIn5pRyDxHr0joWxzZ7oZHCOI1CnQV5HjOq+rzzmEN2LctCZ6S4hbL7SQ1qJ3vp2BCXAygy4tmJOURQdnk0KLwwRS8= is incorrect'
+  )
   test.done();
 };

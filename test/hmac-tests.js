@@ -21,8 +21,13 @@ exports['test HMAC signature with incorrect key'] = function (test) {
     var sig = new crypto.SignedXml();
     sig.keyInfoProvider = new crypto.FileKeyInfo("./test/static/hmac-foobar.key");
     sig.loadSignature(signature);
-    var result = sig.checkSignature(xml);
-    test.equal(result, false);
+    test.throws(
+        function() {
+            sig.checkSignature(xml);
+        },
+        Error,
+        'invalid signature: the signature value EEX7i+HCAfEELjwwKP1vKyPrW10= is incorrect'
+    );
     test.done();
 };
 
